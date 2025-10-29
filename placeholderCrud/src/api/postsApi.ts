@@ -24,7 +24,7 @@ export const postsApi = createApi({
     // READ (Single)
     getPost: builder.query<Post, number>({
       query: (id) => ({ url: `/posts/${id}`, method: 'GET' }),
-      providesTags: (result, error, id) => [{ type: 'Post', id }],
+      providesTags: (_result, _error, id) => [{ type: 'Post', id }],
     }),
 
     // CREATE
@@ -40,13 +40,13 @@ export const postsApi = createApi({
         method: 'PATCH',
         data: patch,
       }),
-      invalidatesTags: (result, error, { id }) => [{ type: 'Post', id }],
+      invalidatesTags: (_result, _error, { id }) => [{ type: 'Post', id }],
     }),
 
     // DELETE
     deletePost: builder.mutation<{ id: number }, number>({
       query: (id) => ({ url: `/posts/${id}`, method: 'DELETE' }),
-      invalidatesTags: (result, error, id) => [{ type: 'Post', id }],
+      invalidatesTags: (_result, _error, id) => [{ type: 'Post', id }],
     }),
   }),
 });
