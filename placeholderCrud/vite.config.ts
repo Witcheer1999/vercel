@@ -40,38 +40,5 @@ export default defineConfig({
           },
         }),
   ],
-  build: {
-      rollupOptions: {
-        output: {
-          manualChunks(id) {
-            // Normalizza i separatori di percorso per
-            // funzionare sia su Windows che su Mac/Linux
-            const path = id.replace(/\\/g, '/');
-
-            if (path.includes('/node_modules/')) {
-              
-              // 1. REGOLA ROUTER (Super-specifica)
-              // Deve catturare sia il wrapper (dom) che il core (router)
-              if (path.includes('/node_modules/react-router-dom/') || path.includes('/node_modules/react-router/')) {
-                return 'vendor-router';
-              }
-
-              // 2. REGOLA REACT CORE (Ultra-specifica)
-              // Controlliamo l'intera cartella per evitare 'react-anything-else'
-              // Usiamo '/react/' e '/react-dom/' (con gli slash)
-              if (path.includes('/node_modules/react-dom/')) {
-                return 'vendor-react-core';
-              }
-              if (path.includes('/node_modules/react/')) {
-                return 'vendor-react-core';
-              }
-              
-              // 3. REGOLA "FALLBACK"
-              // Tutto il resto (axios, zustand, ecc.)
-              return 'vendor-others';
-            }
-          },
-        },
-      },
-    },
+  
 })
